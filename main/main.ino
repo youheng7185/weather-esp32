@@ -1,4 +1,3 @@
-//test
 #include <WiFi.h>
 #include <LiquidCrystal_I2C.h>
 #include <NTPClient.h>
