@@ -1,3 +1,4 @@
+#include <WiFi.h>
 #include <LiquidCrystal_I2C.h>
 
 #define buttonDownPin 14
@@ -6,6 +7,8 @@
 
 LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 20 chars and 4 line display
 
+const char *ssid     = "Galaxy S23 75A3";
+const char *password = "qcomqcom";
 int menu = 1;
 int downLastState = HIGH;
 int downCurrentState;
@@ -78,7 +81,7 @@ void updateMenu() {
       lcd.setCursor(0, 2);
       lcd.print(" Sensor");
       lcd.setCursor(0, 3);
-      lcd.print(" Settings");
+      lcd.print(" WiFi settings");
       Serial.println("menu1");
       break;
     case 2:
@@ -89,7 +92,7 @@ void updateMenu() {
       lcd.setCursor(0, 2);
       lcd.print(" Sensor");
       lcd.setCursor(0, 3);
-      lcd.print(" Settings");
+      lcd.print(" WiFi settings");
       Serial.println("menu2");
       break;
    case 3:
@@ -100,7 +103,7 @@ void updateMenu() {
       lcd.setCursor(0, 2);
       lcd.print(">Sensor");
       lcd.setCursor(0, 3);
-      lcd.print(" Settings");
+      lcd.print(" WiFi settings");
       Serial.println("menu3");
       break;
     case 4:
@@ -111,7 +114,7 @@ void updateMenu() {
       lcd.setCursor(0, 2);
       lcd.print(" Sensor");
       lcd.setCursor(0, 3);
-      lcd.print(">Settings");
+      lcd.print(">WiFi settings");
       Serial.println("menu4");
       break;
   }
@@ -121,6 +124,9 @@ void subMenu() {
   switch (menu) {
     case 1:
       subMenuWeather();
+      break;
+    case 4:
+      subMenuWiFi();
       break;
 }
 }
@@ -144,6 +150,35 @@ void subMenuWeather() {
   }
 }
 
+void subMenuWiFi() {
+  if (WiFi.status() != WL_CONNECTED) {
+    WiFi.begin(ssid, password);
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Connecting ...");
+    delay(7000); // 7 sec to connect to wifi
+    returnMainMenu();
+    } else if (WiFi.status() == WL_CONNECTED) {
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Wi-Fi connected");
+    lcd.setCursor(0, 1);
+    lcd.print("IP address:");
+    lcd.setCursor(0, 2);
+    lcd.print(WiFi.localIP());
+    delay(200);
+    // Keep checking the "Select" button to return to the main menu
+    selectCurrentState = digitalRead(buttonSelectPin);
+    if (selectLastState == LOW && selectCurrentState == HIGH) {
+      Serial.println("The state changed from LOW to HIGH, button is pressed");
+      returnMainMenu();
+      Serial.println("select-home");
+      inSubMenu = false;
+    }
+    selectLastState = selectCurrentState;
+    // Add any additional code for the sub-menu here
+  }
+}
 void returnMainMenu() {
   lcd.clear();
   menu = 1;
