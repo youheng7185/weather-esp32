@@ -58,7 +58,7 @@ void loop() {
     inSubMenu = !inSubMenu;
     
     if (inSubMenu) {
-      subMenuWeather();
+      subMenu();
     } else {
       returnMainMenu();
     }
