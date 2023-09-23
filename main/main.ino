@@ -81,6 +81,7 @@ void loop() {
     Serial.println("select");
   }
   selectLastState = selectCurrentState;
+
 }
 
 void updateMenu() {

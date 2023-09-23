@@ -11,6 +11,7 @@ const unsigned long updateInterval = 200; // Update interval in milliseconds
 
 void subMenuSensor() {
   // Check if it's time to update the sensor value
+  while (inSubMenu) {
   unsigned long currentTime = millis();
   if (currentTime - lastUpdateTime >= updateInterval) {
     ldrValue = analogRead(ldrPin);
@@ -20,10 +21,12 @@ void subMenuSensor() {
     lcd.setCursor(0, 2);
     lcd.print(ldrValue);
     Serial.print(ldrValue);
+    delay(200);
     lastUpdateTime = currentTime; // Update the last update time
   }
-  
+  }
   
   // Check for button press to return to the main menu
   returntoHome();
+  
 }
