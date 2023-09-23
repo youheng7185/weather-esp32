@@ -26,8 +26,8 @@ void subMenuClock() {
     selectCurrentState = digitalRead(buttonSelectPin);
     if (selectLastState == LOW && selectCurrentState == HIGH) {
       Serial.println("The state changed from LOW to HIGH, button is pressed");
-      returnMainMenu();
       lcd.clear();
+      returnMainMenu();
       Serial.println("select-home");
       inSubMenu = false;
       break;

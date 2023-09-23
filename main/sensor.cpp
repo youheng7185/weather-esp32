@@ -7,13 +7,15 @@
 
 int ldrValue;
 unsigned long lastUpdateTime = 0; // Store the last update time
-const unsigned long updateInterval = 200; // Update interval in milliseconds
+const unsigned long updateInterval = 1000; // Update interval in milliseconds
+
+extern int selectLastState;
+extern int selectCurrentState;
 
 void subMenuSensor() {
   // Check if it's time to update the sensor value
   while (inSubMenu) {
   unsigned long currentTime = millis();
-  if (currentTime - lastUpdateTime >= updateInterval) {
     ldrValue = analogRead(ldrPin);
     lcd.clear();
     lcd.setCursor(0, 1);
@@ -21,12 +23,18 @@ void subMenuSensor() {
     lcd.setCursor(0, 2);
     lcd.print(ldrValue);
     Serial.print(ldrValue);
-    delay(200);
-    lastUpdateTime = currentTime; // Update the last update time
-  }
-  }
+    delay(100);
   
-  // Check for button press to return to the main menu
-  returntoHome();
+  if (selectLastState == LOW && selectCurrentState == HIGH) {
+      Serial.println("The state changed from LOW to HIGH, button is pressed");
+      lcd.clear();
+      returnMainMenu();
+      Serial.println("select-home");
+      inSubMenu = false;
+      break;
+    }
+    selectLastState = selectCurrentState;
+  }
+ 
   
 }
