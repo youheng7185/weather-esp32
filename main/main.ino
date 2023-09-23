@@ -7,6 +7,7 @@
 #include "return.h"
 #include "weather.h"
 #include "pins.h"
+#include "sensor.h"
 
 LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 20 chars and 4 line display
 
@@ -39,6 +40,7 @@ void setup() {
   pinMode(buttonDownPin, INPUT_PULLUP);
   pinMode(buttonUpPin, INPUT_PULLUP);
   pinMode(buttonSelectPin, INPUT_PULLUP);
+
 
   updateMenu();
 }
@@ -137,6 +139,9 @@ void subMenu() {
       break;
     case 2:
       subMenuClock();
+      break;
+    case 3:
+      subMenuSensor();
       break;
     case 4:
       subMenuWiFi();
