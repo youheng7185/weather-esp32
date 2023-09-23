@@ -19,14 +19,14 @@ extern int selectLastState;
 extern bool inSubMenu;
 extern int menu = 1;
 int downLastState = HIGH;
-extern int downCurrentState;
 int upLastState = HIGH;
+extern int downCurrentState;
 extern int upCurrentState;
 int upCurrentState = LOW;
 int downCurrentState = LOW;
 // int selectLastState = HIGH;
 extern int selectCurrentState;
-extern unsigned long buttonPressStartTime = 0;
+//extern unsigned long buttonPressStartTime = 0;
 extern bool inSubMenu = false;
 extern const long utcOffsetInSeconds = 28800; //GMT +8
 extern char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
