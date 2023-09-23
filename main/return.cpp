@@ -4,7 +4,7 @@
 #include <Arduino.h>
 
 int selectCurrentState;
-int selectLastState;
+int selectLastState = LOW;
 
 void returnMainMenu() {
     lcd.clear();
