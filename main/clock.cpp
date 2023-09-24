@@ -14,8 +14,10 @@ void subMenuClock() {
     // Your subMenuClock code here
    timeClient.begin();
    lcd.clear();
+   //lcd.print("network is disconnected");
    if(WiFi.status() == WL_CONNECTED) {
     while (inSubMenu) {
+    lcd.clear();
     timeClient.update();
     lcd.setCursor(0, 0);
     lcd.print(daysOfTheWeek[timeClient.getDay()]);
@@ -35,7 +37,7 @@ void subMenuClock() {
       
     }
    }
-  if (WiFi.status() != WL_CONNECTED) {
-    lcd.print("network is disconnected");
-  }
+  //if (WiFi.status() != WL_CONNECTED) {
+//    lcd.print("network is disconnected");
+  //}
 }
