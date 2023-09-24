@@ -2,12 +2,14 @@
 #include <LiquidCrystal_I2C.h>
 #include <NTPClient.h>
 #include <WiFiUdp.h>
-#include "wifi_connect.h"
+
 #include "clock.h"
 #include "return.h"
 #include "weather.h"
 #include "pins.h"
 #include "sensor.h"
+#include "sd_spi.h"
+#include "wifi_connect.h"
 
 LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 20 chars and 4 line display
 
