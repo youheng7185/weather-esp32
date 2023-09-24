@@ -13,10 +13,9 @@ extern int selectCurrentState;
 void subMenuClock() {
     // Your subMenuClock code here
    timeClient.begin();
-   
+   lcd.clear();
    if(WiFi.status() == WL_CONNECTED) {
     while (inSubMenu) {
-    lcd.clear();
     timeClient.update();
     lcd.setCursor(0, 0);
     lcd.print(daysOfTheWeek[timeClient.getDay()]);

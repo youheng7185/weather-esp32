@@ -6,35 +6,33 @@
 #include "pins.h"
 
 int ldrValue;
-unsigned long lastUpdateTime = 0; // Store the last update time
-const unsigned long updateInterval = 1000; // Update interval in milliseconds
 
 extern int selectLastState;
 extern int selectCurrentState;
 
 void subMenuSensor() {
-  // Check if it's time to update the sensor value
   while (inSubMenu) {
-  unsigned long currentTime = millis();
+    // Update the sensor value
     ldrValue = analogRead(ldrPin);
+    
+    // Clear the LCD and display the sensor value
     lcd.clear();
     lcd.setCursor(0, 1);
-    lcd.print("sensor value:");
+    lcd.print("Sensor value:");
     lcd.setCursor(0, 2);
     lcd.print(ldrValue);
-    Serial.print(ldrValue);
-    delay(100);
-  
-  if (selectLastState == LOW && selectCurrentState == HIGH) {
-      Serial.println("The state changed from LOW to HIGH, button is pressed");
-      lcd.clear();
-      returnMainMenu();
-      Serial.println("select-home");
-      inSubMenu = false;
-      break;
-    }
-    selectLastState = selectCurrentState;
+    delay(200);
+    // Check for "Select" button press
+    //if (selectLastState == LOW && selectCurrentState == HIGH) {
+    //  Serial.println("The state changed from LOW to HIGH, button is pressed");
+    //  returnMainMenu();
+    //  Serial.println("select-home");
+    // inSubMenu = false;
+    //  break;
+    //}
+    //selectLastState = selectCurrentState;
+    returntoHome();
+    // Delay for a short interval
+    //delay(1000); // Adjust the delay interval as needed for your desired update rate
   }
- 
-  
 }
