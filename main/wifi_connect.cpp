@@ -2,13 +2,11 @@
 #include "return.h" // Include return.h to access returnMainMenu and returntoHome
 #include <WiFi.h>
 #include "main.h"
-#include "sd_spi.h"
 
 void subMenuWiFi() {
-    String ssid, password;
-    sd_read_wifi(ssid, password);
+    // Your subMenuWiFi code here
     if (WiFi.status() != WL_CONNECTED) {
-    WiFi.begin(ssid.c_str(), password.c_str());
+    WiFi.begin(ssid, password);
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("Connecting ...");
