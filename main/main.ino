@@ -29,8 +29,6 @@ int downCurrentState = LOW;
 extern int selectCurrentState;
 //extern unsigned long buttonPressStartTime = 0;
 extern bool inSubMenu = false;
-extern const long utcOffsetInSeconds = 28800; //GMT +8
-extern char daysOfTheWeek[7][12] = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
 void setup() {
   lcd.init();
@@ -43,6 +41,10 @@ void setup() {
 
 
   updateMenu();
+
+  if(WiFi.status() == WL_CONNECTED) {
+    clockInit();
+  }
 }
 
 void loop() {
