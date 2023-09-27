@@ -23,13 +23,26 @@ const long interval = 600000;  // Interval in milliseconds (10 minutes)
 unsigned long currentMillis;
 bool isWeatherDataUpdated = false; // Flag to indicate if weather data is updated
 
-void subMenuWeather() {
+// weather.cpp
+// ...
+float coord_lon = 0.0;
+float coord_lat = 0.0;
+const char* weather_0_main = "";
+float main_temp = 0.0;
+float main_feels_like = 0.0;
+float main_temp_min = 0.0;
+float main_temp_max = 0.0;
+int main_pressure = 0;
+int main_humidity = 0;
+const char* name = "";
+// ...
+
+void weatherInit() {
   // Your subMenuWeather code here
   inSubMenu = true;
   WiFiClient client;
   HTTPClient http;
-  currentMillis = 0;
-  lcd.clear();
+  unsigned long currentMillis = 0;
 
   if ((WiFi.status() == WL_CONNECTED)) {
     currentMillis = millis();
@@ -69,6 +82,14 @@ void subMenuWeather() {
         int main_humidity = main["humidity"];
 
         const char* name = doc["name"];
+        http.end();
+      } 
+    }
+   }
+}
+
+void subMenuWeather() {
+  unsigned long currentMillis = 0;
         lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(name);
@@ -89,15 +110,9 @@ void subMenuWeather() {
         lcd.print(weather_0_main);
 
         isWeatherDataUpdated = true; // Set the flag to indicate weather data is updated
-      } else {
-        lcd.setCursor(0, 0);
-        lcd.print("error on http request");
-      }
 
-      http.end();
-    }
-  }
-
+        delay(200);
+        
   while (inSubMenu) {
     // Keep checking the "Select" button to return to the main menu
     selectCurrentState = digitalRead(buttonSelectPin);
