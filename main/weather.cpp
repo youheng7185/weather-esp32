@@ -18,10 +18,10 @@ extern int selectCurrentState;
 const String endpoint = "http://api.openweathermap.org/data/2.5/weather?q=Kuantan,malaysia&APPID=";
 const String key = "fd6d749c37dbfa09fe77a3299ee6ea80";
 
-unsigned long previousMillis = 0;
-const long interval = 600000;  // Interval in milliseconds (10 minutes)
-unsigned long currentMillis;
-bool isWeatherDataUpdated = false; // Flag to indicate if weather data is updated
+//unsigned long previousMillis = 0;
+//const long interval = 600000;  // Interval in milliseconds (10 minutes)
+//unsigned long currentMillis;
+//bool isWeatherDataUpdated = false; // Flag to indicate if weather data is updated
 
 // weather.cpp
 // ...
@@ -37,20 +37,15 @@ int main_humidity = 0;
 const char* name = "";
 // ...
 
-void weatherInit() {
+void subMenuWeather() {
   // Your subMenuWeather code here
   inSubMenu = true;
   WiFiClient client;
   HTTPClient http;
-  unsigned long currentMillis = 0;
 
   if ((WiFi.status() == WL_CONNECTED)) {
-    currentMillis = millis();
 
-    if (currentMillis - previousMillis >= interval || !isWeatherDataUpdated) {
-      // It's time to make the HTTP GET request
-      previousMillis = currentMillis;  // Save the last time the request was made
-
+      // make the HTTP GET request
       http.begin(client, endpoint + key);
       int httpCode = http.GET();
 
@@ -83,13 +78,7 @@ void weatherInit() {
 
         const char* name = doc["name"];
         http.end();
-      } 
-    }
-   }
-}
 
-void subMenuWeather() {
-  unsigned long currentMillis = 0;
         lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print(name);
@@ -109,8 +98,6 @@ void subMenuWeather() {
         lcd.print("Weather:");
         lcd.print(weather_0_main);
 
-        isWeatherDataUpdated = true; // Set the flag to indicate weather data is updated
-
         delay(200);
         
   while (inSubMenu) {
@@ -121,11 +108,9 @@ void subMenuWeather() {
       returnMainMenu();
       Serial.println("select-home");
       inSubMenu = false;
-      currentMillis = 0; //reset timer when exits
     }
     selectLastState = selectCurrentState;
-    // Add any additional code for the sub-menu here
-  }
-
-  delay(200);
+      } 
+    }
+   }
 }

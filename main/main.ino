@@ -44,7 +44,6 @@ void setup() {
 
   if(WiFi.status() == WL_CONNECTED) {
     clockInit();
-    weatherInit();
   }
 }
 
