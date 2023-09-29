@@ -1,13 +1,15 @@
 #include <WiFi.h>
 #include <LiquidCrystal_I2C.h>
 #include <NTPClient.h>
-#include <WiFiUdp.h>
+//#include <WiFiUdp.h>
+#include <AsyncUDP.h>
 #include "wifi_connect.h"
 #include "clock.h"
 #include "return.h"
 #include "weather.h"
 #include "pins.h"
 #include "sensor.h"
+#include "udp_server.h"
 
 LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 20 chars and 4 line display
 
@@ -43,11 +45,17 @@ void setup() {
   updateMenu();
 
   if(WiFi.status() == WL_CONNECTED) {
+    udpInit();
     clockInit();
   }
 }
 
 void loop() {
+
+  if(WiFi.status() == WL_CONNECTED) {
+    udpControl();
+    udpBroadcast();
+  }
   // Read the state of the switch/button:
   downCurrentState = digitalRead(buttonDownPin);
   upCurrentState = digitalRead(buttonUpPin);

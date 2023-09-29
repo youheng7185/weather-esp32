@@ -6,6 +6,7 @@
 void subMenuWiFi() {
     // Your subMenuWiFi code here
     if (WiFi.status() != WL_CONNECTED) {
+    WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, password);
     lcd.clear();
     lcd.setCursor(0, 0);
