@@ -155,7 +155,18 @@ void updateMenu() {
       lcd.clear();
       lcd.print(">SD card info");
       lcd.setCursor(0 ,1);
-      lcd.print(" lol1");
+      lcd.print(" Start data logging");
+      lcd.setCursor(0, 2);
+      lcd.print(" lol2");
+      lcd.setCursor(0, 3);
+      lcd.print(" bruh");
+      Serial.println("menu5");
+      break;
+    case 6:
+      lcd.clear();
+      lcd.print(" SD card info");
+      lcd.setCursor(0 ,1);
+      lcd.print(">Start data logging");
       lcd.setCursor(0, 2);
       lcd.print(" lol2");
       lcd.setCursor(0, 3);
@@ -181,5 +192,6 @@ void subMenu() {
       break;
     case 5:
       subMenuSDcard();
+      break;
 }
 }

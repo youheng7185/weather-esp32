@@ -3,8 +3,10 @@
 
 #include <WiFi.h>
 #include <LiquidCrystal_I2C.h>
+#include <Arduino.h>
 
 extern LiquidCrystal_I2C lcd;
+String logTime();
 
 void subMenuClock();
 void clockInit();

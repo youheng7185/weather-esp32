@@ -43,7 +43,8 @@
 #include "return.h"
 #include "sensor.h"
 #include "pins.h"
-
+#include "clock.h"
+#include "sdcardLog.h"
 
 int ldrValue;
 
@@ -161,6 +162,13 @@ void subMenuSensor() {
   if ((getgasreference_count++)%10==0) GetGasReference(); 
   Serial.println(CalculateIAQ(air_quality_score));
   Serial.println("------------------------------------------------");
+  // Create a string containing sensor data, date, and time
+  char sensorData[128];
+  snprintf(sensorData, sizeof(sensorData), "%s, %.2f C, %.2f hPa, %.2f%%, %.2f IAQ",
+           logTime(), bme.readTemperature(), bme.readPressure() / 100.0F, bme.readHumidity(), air_quality_score);
+
+  // Log the sensor data to the SD card
+  appendSensorData("/iaq_data.txt", sensorData);
   delay(200);
     // Check for "Select" button press
     //if (selectLastState == LOW && selectCurrentState == HIGH) {

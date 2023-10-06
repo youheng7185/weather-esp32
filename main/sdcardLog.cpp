@@ -74,3 +74,20 @@ void subMenuSDcard() {
   delay(200);
   returntoHome();
 }
+
+
+void appendSensorData(const char *filename, const char *data) {
+  File file = SD.open("/iaq_data.txt", FILE_APPEND);
+  if (!file) {
+    Serial.println("Failed to open file for appending");
+    return;
+  }
+
+  if (file.println(data)) {
+    Serial.println("Sensor data appended");
+  } else {
+    Serial.println("Append failed");
+  }
+
+  file.close();
+}
