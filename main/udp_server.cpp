@@ -61,17 +61,13 @@ void udpControl() {
         updateMenu();
         Serial.println("down");
       }
+
+      if (strcmp(reinterpret_cast<const char*>(packet.data()), "home") == 0) {
+        returnMainMenu();
+        Serial.println("home");
+      }
       if (strcmp(reinterpret_cast<const char*>(packet.data()), "select") == 0) {
-        
-    // Toggle the inSubMenu flag when the "Select" button is pressed
-        inSubMenu = !inSubMenu;
-    
-        if (inSubMenu) {
-          subMenu();
-        } else {
-          returnMainMenu();
-        }
-    
+        subMenu();
         Serial.println("select");
       }      
         });

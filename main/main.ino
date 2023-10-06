@@ -1,8 +1,10 @@
+#include <Wire.h>
 #include <WiFi.h>
 #include <LiquidCrystal_I2C.h>
 #include <NTPClient.h>
 //#include <WiFiUdp.h>
 #include <AsyncUDP.h>
+#include <Adafruit_Sensor.h>
 #include "wifi_connect.h"
 #include "clock.h"
 #include "return.h"
@@ -10,6 +12,8 @@
 #include "pins.h"
 #include "sensor.h"
 #include "udp_server.h"
+
+#include "Adafruit_BME680.h"
 
 LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 20 chars and 4 line display
 
@@ -32,6 +36,11 @@ extern int selectCurrentState;
 //extern unsigned long buttonPressStartTime = 0;
 extern bool inSubMenu = false;
 
+#define I2C_LCD_ADDR 0x27
+#define BME680_ADDR 0x77
+
+Adafruit_BME680 bme; // I2C
+
 void setup() {
   lcd.init();
   lcd.backlight();
@@ -41,9 +50,10 @@ void setup() {
   pinMode(buttonUpPin, INPUT_PULLUP);
   pinMode(buttonSelectPin, INPUT_PULLUP);
 
-
+  
   updateMenu();
 
+  sensorInit();
   if(WiFi.status() == WL_CONNECTED) {
     udpInit();
     clockInit();

@@ -5,6 +5,10 @@
 #define buttonUpPin 12
 #define buttonSelectPin 27
 
-void subMenuSensor();
+#define SEALEVELPRESSURE_HPA (1013.25)
 
+
+void subMenuSensor();
+void sensorInit();
+void GetGasReference();
 #endif
