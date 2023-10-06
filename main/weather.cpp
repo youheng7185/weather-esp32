@@ -89,7 +89,7 @@ void subMenuWeather() {
         lcd.print("Feel:");
         lcd.print((main_feels_like - 273.15), 1);
         lcd.setCursor(0, 2);
-        lcd.print("Min:");
+        lcd.print("Min :");
         lcd.print((main_temp_min - 273.15), 1);
         lcd.setCursor(10, 2);
         lcd.print("Max:");
