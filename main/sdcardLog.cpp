@@ -64,11 +64,13 @@ void subMenuSDcard() {
     lcd.print("File doens't exist");
     lcd.setCursor(0, 1);
     lcd.print("Creating file...");
-    writeFile(SD, "/data.txt", "Time, Temp, Pressure, Humidnity, IAQ \r\n");
+    writeFile(SD, "/iaq_data.txt", "Time, Temp, Pressure, Humidnity, IAQ \r\n");
   }
   else {
-    Serial.println("File already exists");  
+    lcd.clear();
+    lcd.print("File already exists");  
   }
   file.close();
+  delay(200);
   returntoHome();
 }
