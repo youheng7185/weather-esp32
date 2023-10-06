@@ -51,9 +51,10 @@ void setup() {
   pinMode(buttonSelectPin, INPUT_PULLUP);
 
   
-  updateMenu();
+  
 
   sensorInit();
+  updateMenu();
   if(WiFi.status() == WL_CONNECTED) {
     udpInit();
     clockInit();

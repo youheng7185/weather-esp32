@@ -106,22 +106,22 @@ void subMenuSensor() {
   while (inSubMenu) {
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("Temp:");
-  lcd.setCursor(10, 0);
+  lcd.print("Temp    :");
+  lcd.setCursor(9, 0);
   lcd.print(bme.readTemperature());
-  lcd.print("°C");
+  lcd.print(" C");
 
   lcd.setCursor(0, 1);
   lcd.print("Pressure:");
   lcd.setCursor(9, 1);
   lcd.print(bme.readPressure() / 100.0F);
-  //Serial.println(" hPa");
+  lcd.print(" hPa");
 
   lcd.setCursor(0, 2);
   lcd.print("Humidity:");
   lcd.setCursor(9, 2);
   lcd.print(bme.readHumidity());
-  //Serial.println("%");
+  lcd.print("%");
 
   //Serial.print("        Gas = ");
   //Serial.print(bme.readGas());
@@ -150,8 +150,8 @@ void subMenuSensor() {
   //Combine results for the final IAQ index value (0-100% where 100% is good quality air)
   float air_quality_score = hum_score + gas_score;
   lcd.setCursor(0, 3);
-  lcd.print("IAQ:");
-  lcd.setCursor(4, 3);
+  lcd.print("IAQ     :");
+  lcd.setCursor(9, 3);
   lcd.print(air_quality_score);
   Serial.println("Air Quality = "+String(air_quality_score,1)+"% derived from 25% of Humidity reading and 75% of Gas reading - 100% is good quality air");
   Serial.println("Humidity element was : "+String(hum_score/100)+" of 0.25");
@@ -161,7 +161,7 @@ void subMenuSensor() {
   if ((getgasreference_count++)%10==0) GetGasReference(); 
   Serial.println(CalculateIAQ(air_quality_score));
   Serial.println("------------------------------------------------");
-  delay(2000);
+  delay(200);
     // Check for "Select" button press
     //if (selectLastState == LOW && selectCurrentState == HIGH) {
     //  Serial.println("The state changed from LOW to HIGH, button is pressed");
