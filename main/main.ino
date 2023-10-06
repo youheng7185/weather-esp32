@@ -4,6 +4,7 @@
 #include <NTPClient.h>
 //#include <WiFiUdp.h>
 #include <AsyncUDP.h>
+#include <SPI.h>
 #include <Adafruit_Sensor.h>
 #include "wifi_connect.h"
 #include "clock.h"
@@ -12,6 +13,7 @@
 #include "pins.h"
 #include "sensor.h"
 #include "udp_server.h"
+#include "sdcardLog.h"
 
 #include "Adafruit_BME680.h"
 
@@ -50,8 +52,6 @@ void setup() {
   pinMode(buttonUpPin, INPUT_PULLUP);
   pinMode(buttonSelectPin, INPUT_PULLUP);
 
-  
-  
 
   sensorInit();
   updateMenu();
@@ -151,6 +151,17 @@ void updateMenu() {
       lcd.print(">WiFi settings");
       Serial.println("menu4");
       break;
+    case 5:
+      lcd.clear();
+      lcd.print(">SD card info");
+      lcd.setCursor(0 ,1);
+      lcd.print(" lol1");
+      lcd.setCursor(0, 2);
+      lcd.print(" lol2");
+      lcd.setCursor(0, 3);
+      lcd.print(" bruh");
+      Serial.println("menu5");
+      break;
   }
 }
 
@@ -168,5 +179,7 @@ void subMenu() {
     case 4:
       subMenuWiFi();
       break;
+    case 5:
+      subMenuSDcard();
 }
 }
