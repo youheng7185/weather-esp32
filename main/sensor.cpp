@@ -45,6 +45,8 @@
 #include "pins.h"
 #include "clock.h"
 #include "sdcardLog.h"
+#include "FS.h"
+#include "SD.h"
 
 int ldrValue;
 
@@ -60,6 +62,7 @@ extern float hum_reference = 40;
 extern int   getgasreference_count = 0;
 
 extern Adafruit_BME680 bme;
+String sensorData;
 
 void GetGasReference(){
   // Now run the sensor for a burn-in period, then use combination of relative humidity and gas resistance to estimate indoor air quality as a percentage.
@@ -163,12 +166,15 @@ void subMenuSensor() {
   Serial.println(CalculateIAQ(air_quality_score));
   Serial.println("------------------------------------------------");
   // Create a string containing sensor data, date, and time
-  char sensorData[128];
-  snprintf(sensorData, sizeof(sensorData), "%s, %.2f C, %.2f hPa, %.2f%%, %.2f IAQ",
-           logTime(), bme.readTemperature(), bme.readPressure() / 100.0F, bme.readHumidity(), air_quality_score);
-
+  
+ // Format the sensor data string with date and time
+  //snprintf(sensorData, sizeof(sensorData), "%s, %.2f C, %.2f hPa, %.2f%%, %.2f IAQ",
+  //         logTime(), bme.readTemperature(), bme.readPressure() / 100.0F, bme.readHumidity(), air_quality_score);
+  Serial.println(logTime());
   // Log the sensor data to the SD card
-  appendSensorData("/iaq_data.txt", sensorData);
+  sensorData = String(logTime()) + "," + String(bme.readTemperature()) + "," + String(bme.readPressure()) + "," + String(bme.readHumidity()) + "," +String(air_quality_score);
+  Serial.println(sensorData);
+  appendFile(SD, "/iaq_data.txt", sensorData.c_str());
   delay(200);
     // Check for "Select" button press
     //if (selectLastState == LOW && selectCurrentState == HIGH) {
