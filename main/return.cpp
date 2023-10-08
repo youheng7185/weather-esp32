@@ -25,5 +25,8 @@ void returntoHome() {
       inSubMenu = false;
     }
     selectLastState = selectCurrentState;
+    analogWrite(PIN_RED, 0);
+    analogWrite(PIN_GREEN, 0);
+    analogWrite(PIN_BLUE, 0);
     // Add any additional code for the sub-menu here
 }

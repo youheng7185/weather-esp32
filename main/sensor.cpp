@@ -108,6 +108,9 @@ String CalculateIAQ(float score){
 
 void subMenuSensor() {
   while (inSubMenu) {
+  analogWrite(PIN_RED, 0);
+  analogWrite(PIN_GREEN, 0);
+  analogWrite(PIN_BLUE, 0);
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("Temp    :");
@@ -157,6 +160,42 @@ void subMenuSensor() {
   lcd.print("IAQ     :");
   lcd.setCursor(9, 3);
   lcd.print(air_quality_score);
+  if (air_quality_score <= 50){
+    analogWrite(PIN_RED, 0);
+    analogWrite(PIN_GREEN, 28);
+    analogWrite(PIN_BLUE, 0);
+    Serial.println("less than 50");
+  } else if (air_quality_score > 50 && air_quality_score <= 100) {
+    analogWrite(PIN_RED, 16);
+    analogWrite(PIN_GREEN, 20);
+    analogWrite(PIN_BLUE, 8);
+    Serial.println("more than 50");
+  } else if (air_quality_score > 100 && air_quality_score <= 150) {
+    analogWrite(PIN_RED, 25);
+    analogWrite(PIN_GREEN, 25);
+    analogWrite(PIN_BLUE, 0);    
+  } else if (air_quality_score > 150 && air_quality_score <= 200) {
+    analogWrite(PIN_RED, 25);
+    analogWrite(PIN_GREEN, 16);
+    analogWrite(PIN_BLUE, 0);       
+  } else if (air_quality_score > 200 && air_quality_score <= 250) {
+    analogWrite(PIN_RED, 25);
+    analogWrite(PIN_GREEN, 0);
+    analogWrite(PIN_BLUE, 0);      
+  } else if (air_quality_score > 250 && air_quality_score <= 350) {
+    analogWrite(PIN_RED, 13);
+    analogWrite(PIN_GREEN, 0);
+    analogWrite(PIN_BLUE, 7);    
+  } else if (air_quality_score > 350) {
+    analogWrite(PIN_RED, 10);
+    analogWrite(PIN_GREEN, 5);
+    analogWrite(PIN_BLUE, 0);    
+  } else {
+    analogWrite(PIN_RED, 25);
+    analogWrite(PIN_GREEN, 25);
+    analogWrite(PIN_BLUE, 25);
+    Serial.println("error");
+  }
   Serial.println("Air Quality = "+String(air_quality_score,1)+"% derived from 25% of Humidity reading and 75% of Gas reading - 100% is good quality air");
   Serial.println("Humidity element was : "+String(hum_score/100)+" of 0.25");
   Serial.println("     Gas element was : "+String(gas_score/100)+" of 0.75");

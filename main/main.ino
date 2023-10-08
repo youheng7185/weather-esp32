@@ -52,7 +52,10 @@ void setup() {
   pinMode(buttonUpPin, INPUT_PULLUP);
   pinMode(buttonSelectPin, INPUT_PULLUP);
 
-
+  pinMode(PIN_RED, OUTPUT);
+  pinMode(PIN_GREEN, OUTPUT);
+  pinMode(PIN_BLUE, OUTPUT);
+  
   sensorInit();
   updateMenu();
   if(WiFi.status() == WL_CONNECTED) {
