@@ -37,6 +37,9 @@
 #include <Arduino.h>
 #include <LiquidCrystal_I2C.h>
 #include <SPI.h>
+#include <WiFi.h>
+#include <AsyncUDP.h>
+
 #include <Adafruit_Sensor.h>
 #include "Adafruit_BME680.h"
 #include "main.h"
@@ -47,6 +50,7 @@
 #include "sdcardLog.h"
 #include "FS.h"
 #include "SD.h"
+#include "udp_server.h"
 
 int ldrValue;
 
@@ -63,6 +67,7 @@ extern int   getgasreference_count = 0;
 
 extern Adafruit_BME680 bme;
 String sensorData;
+String sensorDataUdp;
 
 void GetGasReference(){
   // Now run the sensor for a burn-in period, then use combination of relative humidity and gas resistance to estimate indoor air quality as a percentage.
@@ -115,13 +120,15 @@ void subMenuSensor() {
   lcd.setCursor(0, 0);
   lcd.print("Temp    :");
   lcd.setCursor(9, 0);
-  lcd.print(bme.readTemperature());
+  float realTemp = bme.readTemperature();
+  lcd.print(realTemp);
   lcd.print(" C");
 
   lcd.setCursor(0, 1);
   lcd.print("Pressure:");
   lcd.setCursor(9, 1);
-  lcd.print(bme.readPressure() / 100.0F);
+  float realPressure = bme.readPressure();
+  lcd.print(realPressure / 100.0F);
   lcd.print(" hPa");
 
   lcd.setCursor(0, 2);
@@ -214,6 +221,9 @@ void subMenuSensor() {
   sensorData = String(logTime()) + "," + String(bme.readTemperature()) + "," + String(bme.readPressure()) + "," + String(bme.readHumidity()) + "," +String(air_quality_score);
   Serial.println(sensorData);
   appendFile(SD, "/iaq_data.txt", sensorData.c_str());
+  sensorDataUdp = "Time: " + String(logTime()) + "\n" + "Temperature: " + String(bme.readTemperature()) + " °C\n" + "Pressure: " + String(bme.readPressure()/ 100) + " hPa\n" + "Humidnity: " + String(bme.readHumidity()) + "%" + "\n" + "Air Quality Index: " + String(air_quality_score);
+  udp.broadcast(sensorDataUdp.c_str());
+  
   delay(200);
     // Check for "Select" button press
     //if (selectLastState == LOW && selectCurrentState == HIGH) {

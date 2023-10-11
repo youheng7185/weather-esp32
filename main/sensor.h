@@ -7,7 +7,6 @@
 
 #define SEALEVELPRESSURE_HPA (1013.25)
 
-
 void subMenuSensor();
 void sensorInit();
 void GetGasReference();

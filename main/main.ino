@@ -68,7 +68,7 @@ void loop() {
 
   if(WiFi.status() == WL_CONNECTED) {
     udpControl();
-    udpBroadcast();
+    //udpBroadcast();
   }
   // Read the state of the switch/button:
   downCurrentState = digitalRead(buttonDownPin);

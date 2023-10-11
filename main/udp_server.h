@@ -5,4 +5,6 @@ void udpInit();
 void udpBroadcast();
 void udpControl();
 
+extern AsyncUDP udp;
+
 # endif
