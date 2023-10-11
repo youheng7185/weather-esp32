@@ -14,6 +14,7 @@
 #include "sensor.h"
 #include "udp_server.h"
 #include "sdcardLog.h"
+#include "http_server.h"
 
 #include "Adafruit_BME680.h"
 
@@ -60,8 +61,10 @@ void setup() {
   updateMenu();
   if(WiFi.status() == WL_CONNECTED) {
     udpInit();
+    
     clockInit();
   }
+  
 }
 
 void loop() {

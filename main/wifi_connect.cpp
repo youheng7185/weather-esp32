@@ -2,6 +2,7 @@
 #include "return.h" // Include return.h to access returnMainMenu and returntoHome
 #include <WiFi.h>
 #include "main.h"
+#include "http_server.h"
 
 void subMenuWiFi() {
     // Your subMenuWiFi code here
@@ -11,6 +12,7 @@ void subMenuWiFi() {
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("Connecting ...");
+    httpServerInit();
     if (WiFi.status() == WL_CONNECTED) {
       lcd.clear();
       lcd.print("Connected");
