@@ -44,10 +44,45 @@ extern bool inSubMenu = false;
 
 Adafruit_BME680 bme; // I2C
 
+byte customCharSelect[] = {
+  B00000,
+  B00100,
+  B00010,
+  B11111,
+  B00010,
+  B00100,
+  B00000,
+  B00000
+};
+
+byte customCharDown[] = {
+  B00100,
+  B00100,
+  B00100,
+  B00100,
+  B10101,
+  B01110,
+  B00100,
+  B00000
+};
+
+byte customCharUp[] = {
+  B00000,
+  B00100,
+  B01110,
+  B10101,
+  B00100,
+  B00100,
+  B00100,
+  B00100
+};
+
 void setup() {
   lcd.init();
   lcd.backlight();
-
+  lcd.createChar(0, customCharSelect);
+  lcd.createChar(1, customCharDown);
+  lcd.createChar(2, customCharUp);
   Serial.begin(9600);
   pinMode(buttonDownPin, INPUT_PULLUP);
   pinMode(buttonUpPin, INPUT_PULLUP);
@@ -130,24 +165,32 @@ void updateMenu() {
   switch(menu) {
     case 1:
       lcd.clear();
-      lcd.print(">Weather");
-      lcd.setCursor(0 ,1);
+      lcd.print(" Weather");
+      lcd.setCursor(0, 0);
+      lcd.write((uint8_t)0);
+      lcd.setCursor(0, 1);
       lcd.print(" Clock");
       lcd.setCursor(0, 2);
       lcd.print(" Sensor");
       lcd.setCursor(0, 3);
       lcd.print(" WiFi settings");
+      lcd.setCursor(19, 3);
+      lcd.write((uint8_t)1);
       Serial.println("menu1");
       break;
     case 2:
       lcd.clear();
       lcd.print(" Weather");
-      lcd.setCursor(0 ,1);
-      lcd.print(">Clock");
+      lcd.setCursor(0, 1);
+      lcd.print(" Clock");
+      lcd.setCursor(0, 1);        
+      lcd.write((uint8_t)0);    
       lcd.setCursor(0, 2);
       lcd.print(" Sensor");
       lcd.setCursor(0, 3);
       lcd.print(" WiFi settings");
+      lcd.setCursor(19, 3);
+      lcd.write((uint8_t)1);      
       Serial.println("menu2");
       break;
    case 3:
@@ -156,9 +199,13 @@ void updateMenu() {
       lcd.setCursor(0 ,1);
       lcd.print(" Clock");
       lcd.setCursor(0, 2);
-      lcd.print(">Sensor");
+      lcd.print(" Sensor");
+      lcd.setCursor(0, 2);        
+      lcd.write((uint8_t)0);       
       lcd.setCursor(0, 3);
       lcd.print(" WiFi settings");
+      lcd.setCursor(19, 3);
+      lcd.write((uint8_t)1);      
       Serial.println("menu3");
       break;
     case 4:
@@ -169,29 +216,41 @@ void updateMenu() {
       lcd.setCursor(0, 2);
       lcd.print(" Sensor");
       lcd.setCursor(0, 3);
-      lcd.print(">WiFi settings");
+      lcd.print(" WiFi settings");
+      lcd.setCursor(0, 3);        
+      lcd.write((uint8_t)0);
+      lcd.setCursor(19, 3);
+      lcd.write((uint8_t)1);
       Serial.println("menu4");
       break;
     case 5:
       lcd.clear();
-      lcd.print(">SD card info");
+      lcd.print(" SD card info");
+      lcd.setCursor(0, 0);        
+      lcd.write((uint8_t)0);       
       lcd.setCursor(0 ,1);
       lcd.print(" Start data logging");
       lcd.setCursor(0, 2);
       lcd.print(" lol2");
       lcd.setCursor(0, 3);
       lcd.print(" bruh");
+      lcd.setCursor(19, 0);
+      lcd.write((uint8_t)2);
       Serial.println("menu5");
       break;
     case 6:
       lcd.clear();
       lcd.print(" SD card info");
       lcd.setCursor(0 ,1);
-      lcd.print(">Start data logging");
+      lcd.print(" Start data logging");
+      lcd.setCursor(0, 1);        
+      lcd.write((uint8_t)0);       
       lcd.setCursor(0, 2);
       lcd.print(" lol2");
       lcd.setCursor(0, 3);
       lcd.print(" bruh");
+      lcd.setCursor(19, 0);
+      lcd.write((uint8_t)2);
       Serial.println("menu5");
       break;
   }
