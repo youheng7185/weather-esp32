@@ -15,6 +15,7 @@
 #include "udp_server.h"
 #include "sdcardLog.h"
 #include "http_server.h"
+#include "game.h"
 
 #include "Adafruit_BME680.h"
 
@@ -88,6 +89,40 @@ byte customCharReturn[] = {
   B00000
 };
 
+/*declaring the binaries for enemy and character*/
+byte enemy[8] = {
+B00000,
+B00100,
+B01110,
+B11111,
+B10101,
+B11111,
+B11111,
+B10101
+};
+
+byte pac1[8] = {
+B00000,
+B01110,
+B11011,
+B11110,
+B11100,
+B11110,
+B11111,
+B01110
+};
+
+byte pac2[8] = {
+B00000,
+B01110,
+B11011,
+B11111,
+B11111,
+B11111,
+B11111,
+B01110
+};
+
 void setup() {
   lcd.init();
   lcd.backlight();
@@ -95,6 +130,9 @@ void setup() {
   lcd.createChar(1, customCharDown);
   lcd.createChar(2, customCharUp);
   lcd.createChar(3, customCharReturn);
+  lcd.createChar(7, enemy);// declaring the enemy as a character
+  lcd.createChar(6, pac1);// declaring the pac1 as a character
+  lcd.createChar(5, pac2);// declaring the pac2 as a character
   Serial.begin(9600);
   pinMode(buttonDownPin, INPUT_PULLUP);
   pinMode(buttonUpPin, INPUT_PULLUP);
@@ -285,5 +323,8 @@ void subMenu() {
     case 5:
       subMenuSDcard();
       break;
+    case 6:
+      subMenuGame();
+      break;      
 }
 }
