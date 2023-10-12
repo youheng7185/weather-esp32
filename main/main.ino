@@ -56,6 +56,8 @@ void setup() {
   pinMode(PIN_RED, OUTPUT);
   pinMode(PIN_GREEN, OUTPUT);
   pinMode(PIN_BLUE, OUTPUT);
+
+  pinMode(BUZZZER_PIN, OUTPUT);
   
   sensorInit();
   updateMenu();
@@ -80,6 +82,9 @@ void loop() {
 
   if (downLastState == LOW && downCurrentState == HIGH) {
     Serial.println("The state changed from LOW to HIGH, button is pressed");
+    tone(BUZZZER_PIN,1000);
+    delay(100);
+    noTone(BUZZZER_PIN);
     menu++;
     updateMenu();
     Serial.println("down");
@@ -87,6 +92,9 @@ void loop() {
   downLastState = downCurrentState;
   if (upLastState == LOW && upCurrentState == HIGH) {
     Serial.println("The state changed from LOW to HIGH, button is pressed");
+    tone(BUZZZER_PIN,1000);
+    delay(100);
+    noTone(BUZZZER_PIN);
     menu--;
     updateMenu();
     Serial.println("up");
@@ -95,7 +103,9 @@ void loop() {
   
   if (selectLastState == LOW && selectCurrentState == HIGH) {
     Serial.println("The state changed from LOW to HIGH, button is pressed");
-    
+    tone(BUZZZER_PIN,1000);
+    delay(100);
+    noTone(BUZZZER_PIN);
     // Toggle the inSubMenu flag when the "Select" button is pressed
     inSubMenu = !inSubMenu;
     
