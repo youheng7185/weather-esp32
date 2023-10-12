@@ -10,6 +10,8 @@ void subMenuWiFi() {
     WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, password);
     lcd.clear();
+    lcd.setCursor(19, 3);
+    lcd.write((uint8_t)3);
     lcd.setCursor(0, 0);
     lcd.print("Connecting ...");
     httpServerInit();
@@ -39,6 +41,8 @@ void subMenuWiFi() {
     lcd.print(WiFi.RSSI());
     lcd.setCursor(8, 3);
     lcd.print("dBm");
+    lcd.setCursor(19, 3);
+    lcd.write((uint8_t)3);
     
     delay(200);
     returntoHome();

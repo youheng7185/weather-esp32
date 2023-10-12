@@ -8,4 +8,6 @@
 void updateMenu(); // Function declaration
 void subMenu();
 
+//extern byte customCharReturn[];
+
 #endif

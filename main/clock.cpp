@@ -52,6 +52,8 @@ void subMenuClock() {
       lcd.clear();
       lcd.setCursor(0, 0);
       lcd.print(currentTime);
+      lcd.setCursor(19, 3);
+      lcd.write((uint8_t)3);
       delay(1000);
 
       selectCurrentState = digitalRead(buttonSelectPin);

@@ -77,12 +77,24 @@ byte customCharUp[] = {
   B00100
 };
 
+byte customCharReturn[] = {
+  B00100,
+  B01000,
+  B11110,
+  B01001,
+  B00101,
+  B00001,
+  B01110,
+  B00000
+};
+
 void setup() {
   lcd.init();
   lcd.backlight();
   lcd.createChar(0, customCharSelect);
   lcd.createChar(1, customCharDown);
   lcd.createChar(2, customCharUp);
+  lcd.createChar(3, customCharReturn);
   Serial.begin(9600);
   pinMode(buttonDownPin, INPUT_PULLUP);
   pinMode(buttonUpPin, INPUT_PULLUP);

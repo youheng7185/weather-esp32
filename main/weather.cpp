@@ -97,7 +97,8 @@ void subMenuWeather() {
         lcd.setCursor(0, 3);
         lcd.print("Weather:");
         lcd.print(weather_0_main);
-
+        lcd.setCursor(19, 3);
+        lcd.write((uint8_t)3);
         delay(200);
         
   while (inSubMenu) {

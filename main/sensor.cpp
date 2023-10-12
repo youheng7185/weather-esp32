@@ -117,6 +117,8 @@ void subMenuSensor() {
   analogWrite(PIN_GREEN, 0);
   analogWrite(PIN_BLUE, 0);
   lcd.clear();
+  lcd.setCursor(19, 3);
+  lcd.write((uint8_t)3);
   lcd.setCursor(0, 0);
   lcd.print("Temp    :");
   lcd.setCursor(9, 0);

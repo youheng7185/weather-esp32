@@ -43,12 +43,16 @@ void subMenuSDcard() {
   if(!SD.begin(SD_CS)) {
     lcd.clear();
     lcd.print("Card Mount Failed");
+      lcd.setCursor(19, 3);
+      lcd.write((uint8_t)3);    
     return;
   }
   uint8_t cardType = SD.cardType();
   if(cardType == CARD_NONE) {
     lcd.clear();
     lcd.print("No SD card attached");
+      lcd.setCursor(19, 3);
+      lcd.write((uint8_t)3);    
     return;
   }
   lcd.clear();
@@ -64,11 +68,15 @@ void subMenuSDcard() {
     lcd.print("File doens't exist");
     lcd.setCursor(0, 1);
     lcd.print("Creating file...");
+    lcd.setCursor(19, 3);
+    lcd.write((uint8_t)3);
     writeFile(SD, "/iaq_data.txt", "Time, Temp, Pressure, Humidnity, IAQ \r\n");
   }
   else {
     lcd.clear();
-    lcd.print("File already exists");  
+    lcd.print("File already exists");
+      lcd.setCursor(19, 3);
+      lcd.write((uint8_t)3);    
   }
   file.close();
   delay(200);
