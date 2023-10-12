@@ -169,33 +169,33 @@ void subMenuSensor() {
   lcd.print(air_quality_score);
   if (air_quality_score <= 50){
     analogWrite(PIN_RED, 0);
-    analogWrite(PIN_GREEN, 28);
+    analogWrite(PIN_GREEN, 228);
     analogWrite(PIN_BLUE, 0);
     Serial.println("less than 50");
   } else if (air_quality_score > 50 && air_quality_score <= 100) {
-    analogWrite(PIN_RED, 16);
-    analogWrite(PIN_GREEN, 20);
-    analogWrite(PIN_BLUE, 8);
+    analogWrite(PIN_RED, 0);
+    analogWrite(PIN_GREEN, 128);
+    analogWrite(PIN_BLUE, 0);
     Serial.println("more than 50");
   } else if (air_quality_score > 100 && air_quality_score <= 150) {
-    analogWrite(PIN_RED, 25);
-    analogWrite(PIN_GREEN, 25);
+    analogWrite(PIN_RED, 255);
+    analogWrite(PIN_GREEN, 255);
     analogWrite(PIN_BLUE, 0);    
   } else if (air_quality_score > 150 && air_quality_score <= 200) {
-    analogWrite(PIN_RED, 25);
-    analogWrite(PIN_GREEN, 16);
+    analogWrite(PIN_RED, 255);
+    analogWrite(PIN_GREEN, 126);
     analogWrite(PIN_BLUE, 0);       
   } else if (air_quality_score > 200 && air_quality_score <= 250) {
-    analogWrite(PIN_RED, 25);
+    analogWrite(PIN_RED, 255);
     analogWrite(PIN_GREEN, 0);
     analogWrite(PIN_BLUE, 0);      
   } else if (air_quality_score > 250 && air_quality_score <= 350) {
-    analogWrite(PIN_RED, 13);
+    analogWrite(PIN_RED, 153);
     analogWrite(PIN_GREEN, 0);
-    analogWrite(PIN_BLUE, 7);    
+    analogWrite(PIN_BLUE, 76);    
   } else if (air_quality_score > 350) {
-    analogWrite(PIN_RED, 10);
-    analogWrite(PIN_GREEN, 5);
+    analogWrite(PIN_RED, 102);
+    analogWrite(PIN_GREEN, 51);
     analogWrite(PIN_BLUE, 0);    
   } else {
     analogWrite(PIN_RED, 25);

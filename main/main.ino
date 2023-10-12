@@ -82,40 +82,45 @@ void loop() {
 
   if (downLastState == LOW && downCurrentState == HIGH) {
     Serial.println("The state changed from LOW to HIGH, button is pressed");
+    menu++;
+    updateMenu();
     tone(BUZZZER_PIN,1000);
     delay(100);
     noTone(BUZZZER_PIN);
-    menu++;
-    updateMenu();
     Serial.println("down");
   }
   downLastState = downCurrentState;
   if (upLastState == LOW && upCurrentState == HIGH) {
     Serial.println("The state changed from LOW to HIGH, button is pressed");
-    tone(BUZZZER_PIN,1000);
-    delay(100);
-    noTone(BUZZZER_PIN);
     menu--;
     updateMenu();
+    tone(BUZZZER_PIN,1000);
+    delay(100);
+    noTone(BUZZZER_PIN);    
     Serial.println("up");
   }
   upLastState = upCurrentState;
   
   if (selectLastState == LOW && selectCurrentState == HIGH) {
     Serial.println("The state changed from LOW to HIGH, button is pressed");
-    tone(BUZZZER_PIN,1000);
-    delay(100);
-    noTone(BUZZZER_PIN);
+
     // Toggle the inSubMenu flag when the "Select" button is pressed
     inSubMenu = !inSubMenu;
     
     if (inSubMenu) {
       subMenu();
+      tone(BUZZZER_PIN,1000);
+      delay(100);
+      noTone(BUZZZER_PIN);
+      Serial.println("select");      
     } else {
       returnMainMenu();
+      tone(BUZZZER_PIN,1000);
+      delay(100);
+      noTone(BUZZZER_PIN);
+      Serial.println("select");      
     }
-    
-    Serial.println("select");
+
   }
   selectLastState = selectCurrentState;
 

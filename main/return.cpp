@@ -22,6 +22,9 @@ void returntoHome() {
       returnMainMenu();
       lcd.clear();
       Serial.println("select-home");
+      tone(BUZZZER_PIN,1000);
+      delay(100);
+      noTone(BUZZZER_PIN);      
       inSubMenu = false;
     }
     selectLastState = selectCurrentState;

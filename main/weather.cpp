@@ -108,6 +108,9 @@ void subMenuWeather() {
       returnMainMenu();
       Serial.println("select-home");
       inSubMenu = false;
+      tone(BUZZZER_PIN,1000);
+      delay(100);
+      noTone(BUZZZER_PIN);      
     }
     selectLastState = selectCurrentState;
       } 
