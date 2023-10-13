@@ -1,10 +1,9 @@
-#include <LiquidCrystal_I2C.h>/* decarling LCD the library */
+#include <LiquidCrystal_I2C.h>
 #include <Arduino.h>
 #include "main.h"
 #include "pins.h"
 #include "return.h"
 #include "game.h"
-
 
 const int groundLevel = 3; // Adjust the ground level
 int playerPos = groundLevel;  // Initial player position
@@ -13,8 +12,11 @@ int score = 0;
 bool isJumping = false;
 extern int upCurrentState;
 extern int upLastState;
-
-
+extern int selectCurrentState;
+extern int selectLastState;
+bool gameFinish = true;
+bool inGame = false;  // New state to track whether the game is running
+bool gameOverFlag = false; // Add this flag
 
 void playerJump() {
   if (playerPos == groundLevel) {
@@ -38,11 +40,20 @@ void gameOver() {
   lcd.setCursor(3, 1);
   lcd.print("Score: ");
   lcd.print(score);
-  while (true) {
-    // Freeze the game
+
+  while (gameFinish) {
+    selectCurrentState = digitalRead(buttonSelectPin);
+    if (selectLastState == LOW && selectCurrentState == HIGH) {
+      gameFinish = false;
+      lcd.clear();
+      returnMainMenu();
+      inGame = false;  // Set inGame to false when returning to the main menu
+      score = 0;
+      ESP.restart();
+    }
+    selectLastState = selectCurrentState;
+    inGame = false;
   }
-    returnMainMenu();
-  
 }
 
 void updateObstacle() {
@@ -71,8 +82,8 @@ void displayGame() {
   lcd.print("Score: ");
   lcd.print(score);
 
-  //lcd.setCursor(0, groundLevel);
-  //lcd.print("   /\\   ");  // Display the ground
+  lcd.setCursor(0, groundLevel);
+  lcd.print("   /   ");  // Display the ground
 
   lcd.setCursor(2, playerPos);
   lcd.print("*");  // Display the player character
@@ -81,9 +92,11 @@ void displayGame() {
   lcd.print("O");  // Display the obstacle
 }
 
-
-
 void gameInit() {
+  playerPos = groundLevel;
+  obstaclePos = 19;
+  score = 0;
+  inGame = true;  // Set inGame to true when starting the game
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("Dino Run Game");
@@ -91,28 +104,38 @@ void gameInit() {
   delay(800);
 }
 
-void subMenuGame() {
-  while (inSubMenu) {
-      upCurrentState = digitalRead(buttonUpPin);
-  
-  if (upLastState == LOW && upCurrentState == HIGH && playerPos == groundLevel) {
-    // Jump when the button is pressed
-    isJumping = true;
-    playerJump();
-    tone(BUZZZER_PIN,1000);
-    delay(100);
-    noTone(BUZZZER_PIN);    
-    Serial.println("down");
-  }
-  upLastState = upCurrentState;
-  // Update the player position
-  updatePlayer();
-  updateObstacle();
-  // Display the game on the LCD
-  updateScore();
-  displayGame();
 
-  // Introduce some delay to control game speed
-  delay(100);
+void subMenuGame() {
+  if (!inGame) {
+    gameInit();
   }
+
+  while (inGame) {
+    upCurrentState = digitalRead(buttonUpPin);
+
+    if (upLastState == LOW && upCurrentState == HIGH && playerPos == groundLevel) {
+      // Jump when the button is pressed
+      isJumping = true;
+      playerJump();
+      tone(BUZZZER_PIN, 1000);
+      delay(100);
+      noTone(BUZZZER_PIN);
+      Serial.println("down");
+    }
+    upLastState = upCurrentState;
+    // Update the player position
+    updatePlayer();
+    updateObstacle();
+    // Display the game on the LCD
+    updateScore();
+    displayGame();
+
+    if (playerPos == groundLevel && obstaclePos == 3) {
+      gameOver();
+      gameOverFlag = true;
+    }
+    // Introduce some delay to control game speed
+    delay(100);
+  }
+  //inGame = false;  // Set inGame to false when exiting the game
 }

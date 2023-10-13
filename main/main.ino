@@ -133,6 +133,8 @@ void setup() {
   lcd.createChar(7, enemy);// declaring the enemy as a character
   lcd.createChar(6, pac1);// declaring the pac1 as a character
   lcd.createChar(5, pac2);// declaring the pac2 as a character
+  lcd.setCursor(0, 0);
+  lcd.print("yuan shen qi dong");
   Serial.begin(9600);
   pinMode(buttonDownPin, INPUT_PULLUP);
   pinMode(buttonUpPin, INPUT_PULLUP);
@@ -167,7 +169,12 @@ void loop() {
 
   if (downLastState == LOW && downCurrentState == HIGH) {
     Serial.println("The state changed from LOW to HIGH, button is pressed");
-    menu++;
+    if (menu <= 8) {
+      menu++;
+    } else {
+      menu = menu;
+      Serial.println("end of menu");
+    }
     updateMenu();
     tone(BUZZZER_PIN,1000);
     delay(100);
@@ -177,7 +184,12 @@ void loop() {
   downLastState = downCurrentState;
   if (upLastState == LOW && upCurrentState == HIGH) {
     Serial.println("The state changed from LOW to HIGH, button is pressed");
-    menu--;
+    if (menu >= 2) {
+      menu--;
+    } else {
+      menu = menu;
+      Serial.println("end of menu");
+    }
     updateMenu();
     tone(BUZZZER_PIN,1000);
     delay(100);
@@ -223,7 +235,7 @@ void updateMenu() {
       lcd.setCursor(0, 2);
       lcd.print(" Sensor");
       lcd.setCursor(0, 3);
-      lcd.print(" WiFi settings");
+      lcd.print(" Connect WiFi");
       lcd.setCursor(19, 3);
       lcd.write((uint8_t)1);
       Serial.println("menu1");
@@ -238,7 +250,7 @@ void updateMenu() {
       lcd.setCursor(0, 2);
       lcd.print(" Sensor");
       lcd.setCursor(0, 3);
-      lcd.print(" WiFi settings");
+      lcd.print(" Connect WiFi");
       lcd.setCursor(19, 3);
       lcd.write((uint8_t)1);      
       Serial.println("menu2");
@@ -253,7 +265,7 @@ void updateMenu() {
       lcd.setCursor(0, 2);        
       lcd.write((uint8_t)0);       
       lcd.setCursor(0, 3);
-      lcd.print(" WiFi settings");
+      lcd.print(" Connect WiFi");
       lcd.setCursor(19, 3);
       lcd.write((uint8_t)1);      
       Serial.println("menu3");
@@ -266,11 +278,11 @@ void updateMenu() {
       lcd.setCursor(0, 2);
       lcd.print(" Sensor");
       lcd.setCursor(0, 3);
-      lcd.print(" WiFi settings");
+      lcd.print(" Connect WiFi");
       lcd.setCursor(0, 3);        
       lcd.write((uint8_t)0);
       lcd.setCursor(19, 3);
-      lcd.write((uint8_t)1);
+      lcd.write((uint8_t)1);    
       Serial.println("menu4");
       break;
     case 5:
@@ -279,30 +291,65 @@ void updateMenu() {
       lcd.setCursor(0, 0);        
       lcd.write((uint8_t)0);       
       lcd.setCursor(0 ,1);
-      lcd.print(" Start data logging");
-      lcd.setCursor(0, 2);
-      lcd.print(" lol2");
-      lcd.setCursor(0, 3);
-      lcd.print(" bruh");
+      lcd.print(" Dino run");
       lcd.setCursor(19, 0);
       lcd.write((uint8_t)2);
+      lcd.setCursor(19, 3);
+      lcd.write((uint8_t)1);       
       Serial.println("menu5");
       break;
     case 6:
       lcd.clear();
       lcd.print(" SD card info");
       lcd.setCursor(0 ,1);
-      lcd.print(" Start data logging");
+      lcd.print(" Dino run");
       lcd.setCursor(0, 1);        
-      lcd.write((uint8_t)0);       
-      lcd.setCursor(0, 2);
-      lcd.print(" lol2");
-      lcd.setCursor(0, 3);
-      lcd.print(" bruh");
+      lcd.write((uint8_t)0);
       lcd.setCursor(19, 0);
       lcd.write((uint8_t)2);
+      lcd.setCursor(19, 3);
+      lcd.write((uint8_t)1);       
       Serial.println("menu5");
       break;
+    case 7:
+      lcd.clear();
+      lcd.print(" Disconnect WiFi");
+      lcd.setCursor(0 ,1);
+      lcd.print(" Restart");
+      lcd.setCursor(0, 2);
+      lcd.print(" Profile");      
+      lcd.setCursor(0, 0);        
+      lcd.write((uint8_t)0);
+      lcd.setCursor(19, 0);
+      lcd.write((uint8_t)2);       
+      Serial.println("menu5");
+      break;
+    case 8:
+      lcd.clear();
+      lcd.print(" Disconnect WiFi");
+      lcd.setCursor(0 ,1);
+      lcd.print(" Restart");
+      lcd.setCursor(0, 2);
+      lcd.print(" Profile");      
+      lcd.setCursor(0, 1);        
+      lcd.write((uint8_t)0);
+      lcd.setCursor(19, 0);
+      lcd.write((uint8_t)2);       
+      Serial.println("menu5");
+      break;
+    case 9:
+      lcd.clear();
+      lcd.print(" Disconnect WiFi");
+      lcd.setCursor(0 ,1);
+      lcd.print(" Restart");
+      lcd.setCursor(0, 2);
+      lcd.print(" Profile");
+      lcd.setCursor(0, 2);        
+      lcd.write((uint8_t)0);
+      lcd.setCursor(19, 0);
+      lcd.write((uint8_t)2);       
+      Serial.println("menu5");
+      break; 
   }
 }
 
@@ -325,6 +372,34 @@ void subMenu() {
       break;
     case 6:
       subMenuGame();
-      break;      
+      break;
+    case 7:
+      WiFi.disconnect();
+      break;
+    case 8:
+      ESP.restart();
+      break;
+    case 9:
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("CHEK CHEE HIM");
+      lcd.setCursor(0, 1);
+      lcd.print("LEONG CHIN JUN");
+      lcd.setCursor(0, 2);
+      lcd.print("LAU ZHENG HONG");
+      lcd.setCursor(0, 3);
+      lcd.print("LIM YOU HENG");
+      delay(1500);
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Guru pembimbing:");
+      lcd.setCursor(0, 1);
+      lcd.print("Wan Sofian Bin Wan");
+      lcd.setCursor(0, 2);
+      lcd.print("Hamat @ Wan Safie");
+      delay(1000);
+      returnMainMenu();
+      break;
+        
 }
 }
