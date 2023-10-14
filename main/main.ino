@@ -89,40 +89,49 @@ byte customCharReturn[] = {
   B00000
 };
 
-/*declaring the binaries for enemy and character*/
-byte enemy[8] = {
-B00000,
-B00100,
-B01110,
-B11111,
-B10101,
-B11111,
-B11111,
-B10101
+byte customCharyuan1[] = {
+  B00011,
+  B00100,
+  B00101,
+  B01001,
+  B01001,
+  B01001,
+  B10010,
+  B00101
 };
 
-byte pac1[8] = {
-B00000,
-B01110,
-B11011,
-B11110,
-B11100,
-B11110,
-B11111,
-B01110
+byte customCharyuan2[] = {
+  B11110,
+  B10000,
+  B11100,
+  B11100,
+  B00100,
+  B11100,
+  B10100,
+  B10010
 };
 
-byte pac2[8] = {
-B00000,
-B01110,
-B11011,
-B11111,
-B11111,
-B11111,
-B11111,
-B01110
+byte customCharshen1[] = {
+  B01000,
+  B00100,
+  B01110,
+  B00100,
+  B01100,
+  B10110,
+  B00101,
+  B00100
 };
 
+byte customCharshen2[] = {
+  B00100,
+  B11111,
+  B10101,
+  B11111,
+  B10101,
+  B11111,
+  B00100,
+  B00100
+};
 void setup() {
   lcd.init();
   lcd.backlight();
@@ -130,11 +139,18 @@ void setup() {
   lcd.createChar(1, customCharDown);
   lcd.createChar(2, customCharUp);
   lcd.createChar(3, customCharReturn);
-  lcd.createChar(7, enemy);// declaring the enemy as a character
-  lcd.createChar(6, pac1);// declaring the pac1 as a character
-  lcd.createChar(5, pac2);// declaring the pac2 as a character
-  lcd.setCursor(0, 0);
-  lcd.print("yuan shen qi dong");
+  lcd.createChar(4, customCharyuan1);
+  lcd.createChar(5, customCharyuan2);
+  lcd.createChar(6, customCharshen1);
+  lcd.createChar(7, customCharshen2);  
+  lcd.setCursor(8, 1);
+  lcd.write((uint8_t)4);
+  lcd.setCursor(9, 1);
+  lcd.write((uint8_t)5);
+  lcd.setCursor(10, 1);
+  lcd.write((uint8_t)6);
+  lcd.setCursor(11, 1);
+  lcd.write((uint8_t)7);  
   Serial.begin(9600);
   pinMode(buttonDownPin, INPUT_PULLUP);
   pinMode(buttonUpPin, INPUT_PULLUP);
